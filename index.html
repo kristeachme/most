@@ -103,7 +103,7 @@ Gerda ___ Kai. :: helps :: help</textarea>
 const GH_HEART='https://raw.githubusercontent.com/kristeachme/most/main/heart.png';
 const GH_SOUND='https://raw.githubusercontent.com/kristeachme/most/main/звук.png';
 function esc(s){return String(s??'').replaceAll('&','&amp;').replaceAll('"','&quot;').replaceAll('<','&lt;').replaceAll('>','&gt;')}
-function safeJson(o){return JSON.stringify(o).replaceAll('<','\\u003c').replaceAll('>','\\u003e').replaceAll('&','\\u0026')}
+function safeJson(o){return JSON.stringify(o).replace(/[<>&\u2028\u2029]/g,ch=>'\\u'+ch.charCodeAt(0).toString(16).padStart(4,'0'))}
 function lines(v){return String(v).split(/\n+/).map(x=>x.trim()).filter(Boolean)}
 function parseTasks(){
   const mode = document.querySelector('input[name="taskInputMode"]:checked')?.value || 'table';
