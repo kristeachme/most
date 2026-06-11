@@ -27,6 +27,22 @@
 .qaOptions{display:flex;flex-direction:column;gap:12px;margin-top:18px}
 .qaOptions .check{margin-top:0;background:rgba(255,255,255,.82)}
 #taskListBlock{display:none}
+
+.formulaBar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:0 0 14px}
+.formulaBtn{border:0;border-radius:999px;background:linear-gradient(90deg,#34d0ef,#5fe1ff);color:#071d2d;font-family:"Baloo 2",Arial,sans-serif;font-size:15px;font-weight:900;padding:12px 18px;cursor:pointer;box-shadow:0 0 22px rgba(57,206,240,.28),inset 0 1px rgba(255,255,255,.82);transition:.2s ease}
+.formulaBtn:hover{transform:translateY(-1px);filter:brightness(1.04)}
+.formulaModal{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;background:rgba(15,25,40,.36);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);padding:18px}
+.formulaModal.open{display:flex}
+.formulaBox{width:min(720px,96vw);background:rgba(255,255,255,.92);border:1px solid rgba(255,255,255,.86);border-radius:26px;box-shadow:0 24px 80px rgba(31,48,75,.22),inset 0 1px rgba(255,255,255,.95);padding:20px;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.formulaTop{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.formulaTop h3{margin:0;font-size:22px;color:#14314b}
+.formulaClose{width:38px;height:38px;border:0;border-radius:50%;background:#eef7ff;color:#526070;font-size:24px;font-weight:900;cursor:pointer}
+.formulaTemplates{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0}
+.formulaTemplate{border:1px solid var(--line);background:#fff;border-radius:16px;padding:12px 10px;font-family:ui-monospace,Consolas,monospace;font-weight:900;cursor:pointer;color:#152033;transition:.18s ease;text-align:center}
+.formulaTemplate:hover{border-color:var(--cyan);box-shadow:0 0 0 4px rgba(57,206,240,.12);transform:translateY(-1px)}
+.formulaActions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.formulaPreview{min-height:46px;border:1px solid var(--line);border-radius:16px;background:#f8fcff;padding:12px 14px;color:#526070;font-family:ui-monospace,Consolas,monospace;font-size:13px;word-break:break-all}
+@media(max-width:700px){.formulaTemplates{grid-template-columns:1fr 1fr}.formulaActions{grid-template-columns:1fr}}
 @media(max-width:1100px){.side{grid-template-columns:1fr}.previewHead{flex-wrap:wrap}.previewHead input{max-width:none}.grid3{grid-template-columns:1fr}.grid2{grid-template-columns:1fr}.codeBtns{grid-template-columns:1fr}}
 </style>
 </head>
@@ -35,6 +51,7 @@
 <div class="toolbar"><button class="tinyBtn bigAction" onclick="generate()">СОЗДАТЬ</button><button class="tinyBtn bigAction alt" onclick="copyCode()">СКОПИРОВАТЬ IFRAME</button></div><div class="layout">
 <main class="main">
 <div class="card"><div class="tabs"><button class="tab active" data-tab="gameplay">🎮 Геймплей</button><button class="tab" data-tab="assets">🧍 Герой</button><button class="tab" data-tab="route">🌉 Мост</button><button class="tab" data-tab="tasks">📝 Вопросы</button><button class="tab" data-tab="startPage">🚪 Стартовая</button><button class="tab" data-tab="finalPage">🏁 Финал / фидбэк</button><button class="tab" data-tab="sounds">🔊 Звуки</button><button class="tab" data-tab="code">✅ Экспорт</button></div><section class="section active" id="gameplay"><h2>🎮 Геймплей</h2><div class="grid2"><div><label>Язык</label><select id="lang"><option value="ru">Русский</option><option value="en">English</option><option value="de">Deutsch</option><option value="fr">Français</option><option value="es">Español</option><option value="it">Italiano</option><option value="ja">日本語</option><option value="zh">中文</option><option value="ko">한국어</option><option value="latex">LaTeX</option></select></div><div><label>Шрифт</label><select id="font"><option>Nunito</option><option>Inter</option><option>Arial</option><option>Georgia</option><option>Comic Sans MS</option><option>Trebuchet MS</option></select></div><div><label>Режим по умолчанию</label><select id="mode"><option value="choice">Выбор ответа</option><option value="input">Ввод текста</option></select></div><div><label>Таймер, сек</label><input id="timer" min="0" type="number" value="180"/></div><div class="grid2"><div><label>Цвет текста задания</label><input id="qColor" type="color" value="#ffffff"/></div><div><label>Размер задания</label><input id="qSize" max="54" min="18" type="range" value="30"/></div><div><label>Цвет стекла</label><input id="glassColor" type="color" value="#0f4c81"/></div><div><label>Цвет подсветки</label><input id="glowColor" type="color" value="#3fb8ff"/></div><div><label>Цвет кнопок-стекла</label><input id="btnColor" type="color" value="#766a58"/></div><div><label>Размер ответов</label><input id="aSize" max="34" min="14" type="range" value="22"/></div></div><div class="hint">Подсветка меняется одним цветом: она влияет на рамку, сияние окна вопроса, ответы, стартовую страницу, финал и фидбэк. Цвет стекла и кнопок тоже подтягивается автоматически.</div></div></section><section class="section" id="assets"><h2>🧍 Герой</h2><label>Картинка героя URL</label><input id="heroUrl" placeholder="https://.../hero.png" value=""/><div class="grid2"><div><label>Размер героя</label><input id="heroSize" max="280" min="50" type="range" value="115"/></div><div><label>Высота героя</label><input id="heroLift" max="80" min="-80" type="range" value="-35"/></div><div><label>Анимация героя</label><select id="heroAnim"><option value="bob">Мягкое покачивание</option><option value="breathe">Лёгкое дыхание</option><option value="sway">Покачивание в стороны</option><option value="hover">Магическое парение</option><option value="wiggle">Весёлое подпрыгивание</option><option value="tilt">Лёгкий наклон</option><option value="none">Без анимации</option></select></div><div><label>Стартовый отступ</label><input id="heroStartGap" max="14" min="3" type="range" value="8"/></div></div><label class="check"><input id="heroFlip" type="checkbox"/> Отразить героя зеркально</label><div class="hint">Теперь героя можно увеличить сильнее — максимум до 280px. Если герой висит слишком высоко — в «Высота героя» уводи ползунок влево, в минус. Если проваливается в платформу — вправо.</div><div class="hint">Если поле пустое — будет временный герой 🧙‍♀️, чтобы игра не ломалась.</div></section><section class="section" id="route"><h2>🌉 Мост</h2><label>Картинка платформы URL</label><input id="platformUrl" placeholder="https://.../platform.png"/><label>Картинка предмета URL</label><input id="itemUrl" placeholder="https://.../diamond.png"/><div class="grid2"><div><label>Платформ</label><input id="count" max="18" min="3" type="number" value="8"/></div><div><label>Анимация платформ</label><select id="platAnim"><option value="glow">Мягкое сияние</option><option value="float">Парение</option><option value="pulse">Пульс</option><option value="swing">Лёгкое качание</option><option value="wave">Волна по мосту</option><option value="pop">Пружинка</option><option value="spark">Искорки</option><option value="none">Без анимации</option></select></div><div><label>Вид моста</label><select id="path"><option value="line">Линия</option><option selected="" value="wave">Волной</option><option value="stairsUp">Лестница вверх</option><option value="stairsDown">Лестница вниз</option><option value="zigzag">Зигзаг</option></select></div><div><label>Высота моста</label><input id="bridgeY" max="74" min="45" type="range" value="62"/></div><div><label>Размер платформ</label><input id="platformSize" max="190" min="45" type="range" value="78"/></div><div><label>Размер предметов</label><input id="itemSize" max="150" min="28" type="range" value="52"/></div></div><div class="hint">Размеры расширены: платформы до 190px, предметы до 150px.</div></section><section class="section" id="tasks"><h2>🎯 Вопросы и ответы</h2>
+<div class="formulaBar"><button class="formulaBtn" type="button" onclick="openFormulaModal()">🧮 Вставить формулу</button><span class="hint">Формула вставится в поле «Вопросы» в позицию курсора. Для красивого отображения автоматически включится язык LaTeX.</span></div>
 <div class="qaBox"><div class="hint">💡 В колонке «Формат» можно смешивать задания по-русски: «Выбор ответа» — кнопки с вариантами, «Вписать ответ» — поле для ввода. Если строка пустая, берётся режим по умолчанию из вкладки «Геймплей». Если правильных или неправильных ответов несколько, разделяйте их символом | (палочка).</div>
 <div class="qaGrid">
 <div>
@@ -92,6 +109,35 @@
 </section><section class="section" id="startPage"><h2>🚪 Стартовая страница</h2><div class="grid2"><div><label>Заголовок</label><input id="startTitle" value="Floating Bridge"/></div><div><label>Текст кнопки</label><input id="startButton" value="START"/></div></div><label>Описание</label><textarea id="startText">Собирай сияющий предмет и отвечай на задания</textarea><label>Картинка на стартовой странице URL</label><input id="startImage" placeholder="https://.../start.png"/><div class="hint">Можно вставить картинку персонажа, логотип квеста или короткую обложку.</div></section><section class="section" id="finalPage"><h2>🏁 Финал и фидбэк</h2><div class="grid2"><div><label>Заголовок при проигрыше</label><input id="loseTitle" value="GAME OVER"/></div><div><label>Текст кнопки финала</label><input id="endButton" value="AGAIN"/></div></div><label>Текст при проигрыше</label><textarea id="loseText">Попробуй ещё раз</textarea><div class="grid2"><div><label>Заголовок окна фидбэка</label><input id="feedbackTitle" value="Mission complete!"/></div><div><label>Картинка фидбэка URL</label><input id="feedbackImage" placeholder="https://.../badge.png"/></div></div><label>Текст фидбэка после прыжка с моста</label><textarea id="feedbackText">Ты прошёл весь парящий мост ✨</textarea><div class="hint">Механика: герой стоит слева → нажимаем предмет → вопрос → правильный ответ подсвечивает платформу, герой прыгает на неё, предмет собирается в панель и включается следующий предмет.</div></section><section class="section" id="sounds"><h2>🔊 Игровые и</h2><div class="hint">Вшила приятные WebAudio-и: сбор предмета, появление платформы, прыжок, правильный/неправильный ответ, падение, финиш. Они работают без mp3-ссылок и не грузят файл.</div><div class="grid2"><label class="check"><input checked="" id="soundOn" type="checkbox"/> Звук включен</label><label class="check"><input id="musicOn" type="checkbox"/> Лёгкий фон-пэд</label></div></section><section class="section" id="code"><h2>✅ Код для Genially</h2><div class="codeBtns"><button class="tinyBtn" onclick="generate()">СОЗДАТЬ</button><button class="tinyBtn" onclick="copyCode()">СКОПИРОВАТЬ IFRAME</button></div><div class="out" id="output"></div><div class="hint">Вставляй iframe-код в Genially через Embed/Вставить код. Фон игры прозрачный.</div></section></div>
 <div class="card previewPanel"><h2>👀 Предпросмотр</h2><div class="previewHead"><button class="tinyBtn" onclick="generate()">Обновить предпросмотр</button></div><div class="previewWrap"><iframe allow="autoplay" id="preview"></iframe></div></div>
 </main>
+</div>
+
+<div class="formulaModal" id="formulaModal" aria-hidden="true">
+  <div class="formulaBox">
+    <div class="formulaTop">
+      <h3>🧮 Вставить формулу</h3>
+      <button class="formulaClose" type="button" onclick="closeFormulaModal()">×</button>
+    </div>
+    <div class="hint">Выбери шаблон или напиши LaTeX вручную. В вопрос вставится готовая формула в скобках \( ... \).</div>
+    <label>Формула LaTeX</label>
+    <input id="formulaInput" placeholder="Например: \frac{3}{4}+\frac{1}{2}" value="\frac{3}{4}+\frac{1}{2}">
+    <div class="formulaTemplates">
+      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('\\frac{a}{b}')">\frac{a}{b}</button>
+      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('\\sqrt{x}')">\sqrt{x}</button>
+      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('x^2')">x^2</button>
+      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('x_1')">x_1</button>
+      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('2x+5=17')">2x+5=17</button>
+      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('45^\\circ')">45^\circ</button>
+      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('\\pi r^2')">\pi r^2</button>
+      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('a \\times b')">a \times b</button>
+      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('a \\div b')">a \div b</button>
+    </div>
+    <label>Как будет вставлено</label>
+    <div class="formulaPreview" id="formulaPreview">\(\frac{3}{4}+\frac{1}{2}\)</div>
+    <div class="formulaActions">
+      <button class="tinyBtn" type="button" onclick="insertFormulaIntoQuestion()">Вставить в вопрос</button>
+      <button class="tinyBtn" type="button" onclick="closeFormulaModal()">Отмена</button>
+    </div>
+  </div>
 </div>
 <script>
 const GH_HEART='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3Cfilter%20id%3D%22g%22%20x%3D%22-50%25%22%20y%3D%22-50%25%22%20width%3D%22200%25%22%20height%3D%22200%25%22%3E%3CfeGaussianBlur%20stdDeviation%3D%222.6%22%20result%3D%22b%22/%3E%3CfeMerge%3E%3CfeMergeNode%20in%3D%22b%22/%3E%3CfeMergeNode%20in%3D%22SourceGraphic%22/%3E%3C/feMerge%3E%3C/filter%3E%3ClinearGradient%20id%3D%22p%22%20x1%3D%2218%22%20y1%3D%228%22%20x2%3D%2248%22%20y2%3D%2258%22%20gradientUnits%3D%22userSpaceOnUse%22%3E%3Cstop%20stop-color%3D%22%23ff8fb7%22/%3E%3Cstop%20offset%3D%22.55%22%20stop-color%3D%22%23ff3f7e%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23d91158%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath%20filter%3D%22url%28%23g%29%22%20d%3D%22M32%2056S7%2041.3%207%2022.7C7%2013.8%2013.2%208%2021.2%208c4.8%200%208.6%202.3%2010.8%206.1C34.2%2010.3%2038%208%2042.8%208%2050.8%208%2057%2013.8%2057%2022.7%2057%2041.3%2032%2056%2032%2056Z%22%20fill%3D%22url%28%23p%29%22/%3E%3Cpath%20d%3D%22M20.2%2013.2c-5.2.5-8.4%204.5-8.6%209.2%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%20opacity%3D%22.55%22/%3E%3C/svg%3E';
@@ -169,6 +215,60 @@ function buildGame(c){return `<!DOCTYPE html><html lang="${c.lang==='latex'?'ru'
       it.addEventListener('click',tapItem,{passive:false});
       b.appendChild(it)});moveHero(0)}function moveHero(delay=600){let h=$('hero'),target=heroStep>=0?heroStep:0,p=P[Math.min(target,P.length-1)];h.innerHTML=asset(C.heroUrl,'🧙‍♀️');h.classList.remove('anim-bob','anim-breathe','anim-sway','anim-hover','anim-wiggle','anim-tilt','anim-none');h.classList.add('anim-'+(C.heroAnim||'bob'));setTimeout(()=>{let x=heroStep<0?Math.max(7,p.x-(C.heroStartGap||8)):p.x;h.style.left=x+'%';h.style.top='calc('+p.y+'% - '+C.heroLift+'px)'},delay)}function livesEl(){let el=$('lives');el.innerHTML='';for(let i=0;i<3;i++){let d=document.createElement('div');d.className='heart';d.style.opacity=i<lives?1:.23;d.innerHTML='<img src="'+E(C.heartIcon)+'"><span class="fallback">❤️</span>';el.appendChild(d)}}function progressEl(){let el=$('progress');el.innerHTML='';let baseSlot=3.2, baseGap=1, panelW=42, pad=2.4;let need=C.count*baseSlot+Math.max(C.count-1,0)*baseGap;let scale=Math.min(1,Math.max(.50,(panelW-pad)/need));el.style.setProperty('--inv-scale',scale);for(let i=0;i<C.count;i++){let s=document.createElement('div');s.className='slot '+(i<=heroStep?'done':'');s.innerHTML='<div class="slotItem">'+asset(C.itemUrl,'💎')+'</div>';el.appendChild(s)}}function startTimer(){if(!time){$('timer').textContent='';const tp=document.querySelector('.timerPanel');if(tp)tp.style.display='none';return}$('timer').textContent=fmt(time);timerId=setInterval(()=>{time--;$('timer').textContent=fmt(time);if(time<=0)lose('Время вышло')},1000)}function fmt(s){return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')}function collect(i){if(!started||waiting||i!==idx)return;SFX.collect();showQuestion()}function showQuestion(){waiting=true;let t=C.tasks[idx%C.tasks.length]||{q:'...',correct:['OK'],wrong:['NO']},q=$('q');let answers=[...t.wrong.map(x=>({t:x,ok:false})),{t:t.correct[0],ok:true}].sort(()=>Math.random()-.5);if((t.mode||C.mode)==='input'){q.innerHTML='<div>'+t.q+'</div><div class="inputAnswer"><input id="answerInput" autocomplete="off"><button id="answerBtn" aria-label="Проверить ответ" title="Проверить"><svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><filter id="checkGlow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter><linearGradient id="checkGrad" x1="14" y1="12" x2="50" y2="54" gradientUnits="userSpaceOnUse"><stop stop-color="#9DFFB3"/><stop offset="0.5" stop-color="#31D96B"/><stop offset="1" stop-color="#11A846"/></linearGradient></defs><circle cx="32" cy="32" r="25" fill="url(#checkGrad)" filter="url(#checkGlow)"/><path d="M19 32.5 28 41 46 23" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>';setTimeout(()=>$('answerInput')?.focus(),50);$('answerBtn').onclick=()=>checkInput(t.correct);$('answerInput').onkeydown=e=>{if(e.key==='Enter')checkInput(t.correct)}}else{q.innerHTML='<div>'+t.q+'</div><div class="answers">'+answers.map(a=>'<button class="ans" data-ok="'+a.ok+'">'+E(a.t)+'</button>').join('')+'</div>';q.querySelectorAll('.ans').forEach(btn=>btn.onclick=()=>checkChoice(btn))}q.style.display='block';if(C.lang==='latex'&&window.MathJax)MathJax.typesetPromise([q]).catch(()=>{})}function norm(s){return String(s).trim().toLowerCase().replace(/\\s+/g,' ')}function checkInput(correct){let val=norm($('answerInput').value),ok=correct.some(c=>norm(c)===val);finishAnswer(ok)}function checkChoice(btn){let ok=btn.dataset.ok==='true';btn.classList.add(ok?'good':'bad');finishAnswer(ok)}function finishAnswer(ok){if(!waiting)return;waiting=false;if(ok){SFX.ok();setTimeout(()=>next(),450)}else{SFX.bad();lives--;livesEl();$('hero').classList.add('shake');setTimeout(()=>$('hero').classList.remove('shake'),760);if(lives<=0)setTimeout(()=>lose('Жизни закончились'),500);else setTimeout(()=>{waiting=true},500)}}function next(){let target=idx;$('q').style.display='none';heroStep=target;idx++;SFX.appear();SFX.jump();$('hero').classList.add('jump');render();setTimeout(()=>$('hero').classList.remove('jump'),800);if(idx>=C.count){setTimeout(()=>win(),950)}}function win(){clearInterval(timerId);SFX.win();$('q').style.display='none';let h=$('hero'),last=P[P.length-1]||{x:86,y:C.bridgeY};h.classList.remove('anim-bob','anim-breathe','anim-sway','anim-hover','anim-wiggle','anim-tilt','anim-none','jump');h.classList.add('finishJump');setTimeout(()=>{h.style.left=Math.min(96,last.x+8)+'%';h.style.top='calc('+last.y+'% - '+C.heroLift+'px)'},30);setTimeout(()=>{$('feedback').classList.remove('hidden')},1200)}function lose(m){clearInterval(timerId);SFX.fall();$('hero').classList.add('fall');setTimeout(()=>{$('endTitle').textContent=C.endPage.loseTitle||'GAME OVER';$('endMsg').textContent=(C.endPage.loseText||m);$('end').classList.remove('hidden')},800)}const volumeSlider=$('volumeSlider');if(volumeSlider){volumeSlider.oninput=()=>{volume=+volumeSlider.value/100;volumeSlider.style.setProperty('--vol',volumeSlider.value+'%');muted=volume<=0;$('soundBtn').style.opacity=muted ? .45 : 1};}
 $('soundBtn').onclick=()=>{muted=!muted;if(muted){volumeSlider.value=0;volumeSlider.style.setProperty('--vol','0%');volume=0}else{volumeSlider.value=75;volumeSlider.style.setProperty('--vol','75%');volume=.75}$('soundBtn').style.opacity=muted ? .45 : 1};function startGame(){try{started=true;try{SFX.init()}catch(e){};$('start').classList.add('hidden');render();startTimer()}catch(e){console.error(e);$('start').style.display='none'}}window.startGame=startGame;$('startBtn').onclick=startGame;render();<\/script></body></html>`}
+
+function openFormulaModal(){
+  const modal=document.getElementById('formulaModal');
+  if(!modal)return;
+  modal.classList.add('open');
+  modal.setAttribute('aria-hidden','false');
+  updateFormulaPreview();
+  setTimeout(()=>document.getElementById('formulaInput')?.focus(),30);
+}
+function closeFormulaModal(){
+  const modal=document.getElementById('formulaModal');
+  if(!modal)return;
+  modal.classList.remove('open');
+  modal.setAttribute('aria-hidden','true');
+}
+function setFormulaTemplate(value){
+  const input=document.getElementById('formulaInput');
+  if(!input)return;
+  input.value=value;
+  updateFormulaPreview();
+  input.focus();
+}
+function updateFormulaPreview(){
+  const input=document.getElementById('formulaInput');
+  const preview=document.getElementById('formulaPreview');
+  if(!input||!preview)return;
+  const raw=String(input.value||'').trim() || '\\frac{3}{4}+\\frac{1}{2}';
+  preview.textContent='\\('+raw+'\\)';
+}
+function insertAtCursor(textarea,text){
+  const start=textarea.selectionStart ?? textarea.value.length;
+  const end=textarea.selectionEnd ?? textarea.value.length;
+  textarea.value=textarea.value.slice(0,start)+text+textarea.value.slice(end);
+  const pos=start+text.length;
+  textarea.focus();
+  textarea.setSelectionRange(pos,pos);
+}
+function insertFormulaIntoQuestion(){
+  const input=document.getElementById('formulaInput');
+  const textarea=document.getElementById('questionsText');
+  if(!input||!textarea)return;
+  const raw=String(input.value||'').trim();
+  if(!raw){input.focus();return;}
+  const formula='\\('+raw+'\\)';
+  insertAtCursor(textarea,formula);
+  if(window.lang)lang.value='latex';
+  textarea.dispatchEvent(new Event('input',{bubbles:true}));
+  closeFormulaModal();
+  generate();
+}
+document.addEventListener('input',e=>{if(e.target&&e.target.id==='formulaInput')updateFormulaPreview()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeFormulaModal()});
+document.addEventListener('click',e=>{const modal=document.getElementById('formulaModal');if(modal&&e.target===modal)closeFormulaModal()});
+
 function generate(){const c=cfg();const game=buildGame(c);preview.srcdoc=game;const iframe='<iframe srcdoc="'+esc(game)+'" sandbox="allow-scripts allow-same-origin allow-modals" width="100%" height="600" frameborder="0" style="background:transparent;display:block" allow="autoplay"></iframe>';output.textContent=iframe;window.lastGame=game;return iframe}
 async function copyCode(){generate();try{await navigator.clipboard.writeText(output.textContent);alert('Код скопирован')}catch(e){alert('Скопируй код вручную из окна')}}
 function blobDownload(name,text){let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type:'text/html;charset=utf-8'}));a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},0)}
