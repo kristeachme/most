@@ -181,7 +181,7 @@ function parseQuestionMedia(raw){
   let q=String(raw||'').trim();
   const imgRe=/(data:image\/[a-zA-Z0-9.+-]+;base64,[A-Za-z0-9+/=]+|https?:\/\/\S+?\.(?:png|jpe?g|gif|webp|svg)(?:[?#][^\s]*)?)/i;
   const m=q.match(imgRe);
-  if(!m) return {q:q||'...', image:''};
+if(!m) return {q:q||'', image:''};
   const image=m[1];
   q=(q.slice(0,m.index)+q.slice(m.index+m[0].length)).replace(/\s{2,}/g,' ').trim();
   return {q:q||'', image};
@@ -210,7 +210,7 @@ function parseTasks(){
     }
     if(!wrong.length) wrong = ['NO'];
     const qm=parseQuestionMedia(q);
-    return {q:qm.q||'...', image:qm.image||'', mode:parseTaskMode(typeLines[i]), correct, wrong};
+    return {q:qm.q||'', image:qm.image||'', mode:parseTaskMode(typeLines[i]), correct, wrong};
   });
   if(document.getElementById('randomQuestions')?.checked){
     tasks = tasks.sort(()=>Math.random()-.5);
