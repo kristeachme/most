@@ -142,32 +142,40 @@
     <label>Формула LaTeX</label>
     <input id="formulaInput" placeholder="Например: $\\frac{3}{4}+\\frac{1}{2}$" value="$\\frac{3}{4}+\\frac{1}{2}$">
     <div class="formulaTemplates">
-      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$a^2+b^2=c^2$')">$a^2+b^2=c^2$</button>
-      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$\\frac{a}{b}$')">$\frac{a}{b}$</button>
-      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$$\\frac{a}{b}$$')">$$\frac{a}{b}$$</button>
-      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$\\sqrt{x}$')">$\sqrt{x}$</button>
-      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$x^2$')">$x^2$</button>
-      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$x^{10}$')">$x^{10}$</button>
-      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$x_1$')">$x_1$</button>
-      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$a_{n+1}$')">$a_{n+1}$</button>
-      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$2x+5=17$')">$2x+5=17$</button>
-      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$90^\\circ$')">$90^\circ$</button>
-      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$\\pi r^2$')">$\pi r^2$</button>
-      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$a \\times b$')">$a \times b$</button>
-      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$a \\div b$')">$a \div b$</button>
-      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$\\pm$')">$\pm$</button>
-      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$\\neq$')">$\neq$</button>
-      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$\\leq$')">$\leq$</button>
-      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$\\geq$')">$\geq$</button>
-      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$\\angle ABC$')">$\angle ABC$</button>
-      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$\\triangle ABC$')">$\triangle ABC$</button>
-      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$\\overline{AB}$')">$\overline{AB}$</button>
-      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$S=24\\,\\text{см}^2$')">$S=24\,\text{см}^2$</button>
-      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$P=2(a+b)$')">$P=2(a+b)$</button>
-      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$V=abc$')">$V=abc$</button>
-      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$$\\begin{cases}\\nx+y=5 \\\\ \\nx-y=1\\n\\end{cases}$$')">система</button>
+      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$a^2+b^2=c^2$')">a²+b²=c²</button>
+      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$\\frac{a}{b}$')">a/b</button>
+      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$$\\frac{a}{b}$$')">крупная дробь</button>
+      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$\\sqrt{x}$')">√x</button>
+      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$x^2$')">x²</button>
+      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$x^{10}$')">x¹⁰</button>
+      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$x_1$')">x₁</button>
+      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$a_{n+1}$')">aₙ₊₁</button>
+      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$2x+5=17$')">2x+5=17</button>
+      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$90^\\circ$')">90°</button>
+      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$\\pi r^2$')">πr²</button>
+      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$a \\times b$')">a × b</button>
+      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$a \\div b$')">a ÷ b</button>
+      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$\\pm$')">±</button>
+      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$\\neq$')">≠</button>
+      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$\\leq$')">≤</button>
+      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$\\geq$')">≥</button>
+      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$+$')">+</button>
+      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$-$')">−</button>
+      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$=$')">=</button>
+      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$<$')">&lt;</button>
+      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$>$')">&gt;</button>
+      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$\\%$')">%</button>
+      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$\\pi$')">π</button>
+      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$\\infty$')">∞</button>
+      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$\\angle ABC$')">∠ABC</button>
+      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$\\triangle ABC$')">△ABC</button>
+      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$\\overline{AB}$')">AB̅</button>
+      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$S=24\\,\\text{см}^2$')">S=24 см²</button>
+      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$P=2(a+b)$')">P=2(a+b)</button>
+      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$V=abc$')">V=abc</button>
+      <button class="formulaTemplate" type="button" onclick="setFormulaTemplate('$$\\begin{cases}\\nx+y=5 \\\\ \\nx-y=1\\n\\end{cases}$$')">x+y=5<br>x−y=1</button>
     </div>
-    <label>Как будет вставлено</label>
+    <label>Код для вставки</label>
     <div class="formulaPreview" id="formulaPreview">$\frac{3}{4}+\frac{1}{2}$</div>
     <div class="formulaActions">
       <button class="tinyBtn" type="button" onclick="insertFormulaIntoQuestion()">Вставить в вопрос</button>
